@@ -246,3 +246,4 @@ def runCrosswordleHelper():
 
 if __name__ == "__main__":
     print(runCrosswordleHelper())
+    input("Press enter to exit.")
