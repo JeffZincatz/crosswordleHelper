@@ -240,6 +240,8 @@ def search(state:State):
 def runCrosswordleHelper():
     initState = getInitState()
     goalState = search(initState)
+    if goalState is None:
+        return "No solution found"
     goalState.reverse()
     return goalState
 
