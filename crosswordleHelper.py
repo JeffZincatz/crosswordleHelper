@@ -37,34 +37,37 @@ def expandWordPool2():
 
 def fitPattern(inputW:str, pattern:str, word:str):
     '''
+    Improved version of fit pattern check function.
     Check if a input word fit a given word by a pattern
     A pattern must be a string of 5 numbers consists of only 0, 1, or 2.
     A word must be exactly 5 letters long.
     0: miss; 1: hit but wrong position; 2: hit and correct position.
     Pattern and word format should be handled by input function.
+
+    e.g.
+    input word = eeezz; pattern = 11000; word 1 = zzzee (True)
     '''
-    
     word = word.upper()
     inputW = inputW.upper()
 
-    # check for any hit in word
-    remainedStr = "" # all char except those hit
-    for i in range(5):
-        if pattern[i] != '2':
-            # not hit
-            remainedStr += word[i]
-
-    
-    # check for not perfect hits / no hits
-    for i in range(5):
-        p = pattern[i]
-        if p == '0' and inputW[i] in remainedStr:
-            return False
-        elif p == '1' and (inputW[i] not in word or inputW[i] == word[i]):
-            return False
-        elif p == '2' and (inputW[i] != word[i]):
-            return False
+    for i, p in enumerate(pattern):
+        ci = inputW[i]
+        if p == '0':
+            if ci in word:
+                return False
+        elif p == '2':
+            cw = word[i]
+            if ci != cw:
+                return False
+        elif p == '1':
+            if ci not in word:
+                return False
+            cw = word[i]
+            if ci == cw:
+                return False
+            word = word.replace(ci, '.', 1) # replace char with non-alphabet s.t. cannot be matched to again
     return True
+
 
 def inputFiveLetterWord():
     result = ""
