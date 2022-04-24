@@ -1,3 +1,5 @@
+from moreWords import common, common2, other
+
 def readWordPool():
     '''
     Get all valid wordle answer words.
@@ -14,6 +16,24 @@ WORD_POOL = readWordPool()
 
 def getWordPool():
     return WORD_POOL.copy()
+
+def expandWordPool():
+    '''
+    Get all words from common and common2.
+    '''
+    global WORD_POOL
+    WORD_POOL = common + common2
+    WORD_POOL = list(set(WORD_POOL))
+
+
+def expandWordPool2():
+    '''
+    Get all words from common, common2, and other.
+    '''
+    global WORD_POOL
+    WORD_POOL = common + common2 + other
+    WORD_POOL = list(set(WORD_POOL))
+
 
 def fitPattern(inputW:str, pattern:str, word:str):
     '''
@@ -241,7 +261,19 @@ def runCrosswordleHelper():
     initState = getInitState()
     goalState = search(initState)
     if goalState is None:
-        return "No solution found"
+        response = input("No solution found. Try with larger word pool? (Y/N)").upper()
+        if response == "Y":
+            expandWordPool()
+            initState = getInitState()
+            goalState = search(initState)
+            if goalState is None:
+                response = input("No solution found. Try with largest word pool? (Y/N)").upper()
+                if response == "Y":
+                    expandWordPool2()
+                    initState = getInitState()
+                    goalState = search(initState)
+                    if goalState is None:
+                        return "No solution found"
     goalState.reverse()
     return goalState
 
