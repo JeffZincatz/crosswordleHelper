@@ -59,6 +59,7 @@ def fitPattern(inputW:str, pattern:str, word:str):
             cw = word[i]
             if ci != cw:
                 return False
+            word = word.replace(ci, '.', 1) # replace char with non-alphabet s.t. cannot be matched to again
         elif p == '1':
             if ci not in word:
                 return False
