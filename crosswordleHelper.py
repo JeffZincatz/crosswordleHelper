@@ -131,7 +131,6 @@ class State:
     nGuessLeft = int() # number of guess left to make
     patterns = list() # patterns of the problem, bottom to top
     guesses = list() # list of words guessed, bottom to top
-    mustInclude = list()
     mustExclude = list()
 
     def __init__(self, nGuess:int, nGuessLeft:int, patterns:list, guesses:list, mustExclude:list):
